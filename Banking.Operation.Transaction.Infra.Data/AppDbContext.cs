@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Banking.Operation.Transaction.Domain.Transaction.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Banking.Operation.Transaction.Infra.Data
 {
@@ -9,5 +10,7 @@ namespace Banking.Operation.Transaction.Infra.Data
         {
 
         }
+
+        public DbSet<TransactionEntity> Transactions { get; set; }
     }
 }
