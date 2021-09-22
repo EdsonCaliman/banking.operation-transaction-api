@@ -79,13 +79,13 @@ namespace Banking.Operation.Transaction.Api.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(ResponseTransactionDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<BussinessMessage>), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> Save(Guid clientid, RequestTransactionDto client)
+        public async Task<ActionResult> Save(Guid clientid, RequestTransactionDto requestTransaction)
         {
             _logger.LogInformation("Receive Save...");
 
             try
             {
-                var transaction = await _transactionService.Save(clientid, client);
+                var transaction = await _transactionService.Save(clientid, requestTransaction);
 
                 return Ok(transaction);
             }

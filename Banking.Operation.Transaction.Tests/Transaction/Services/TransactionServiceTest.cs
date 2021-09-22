@@ -20,7 +20,6 @@ namespace Banking.Operation.Transaction.Tests.Transaction.Services
         private ITransactionService _transactionService;
         private Mock<ITransactionRepository> _transactionRepository;
         private Mock<IClientService> _clientService;
-        private Mock<IContactService> _contactService;
         private Fixture _fixture;
 
         [SetUp]
@@ -28,10 +27,9 @@ namespace Banking.Operation.Transaction.Tests.Transaction.Services
         {
             _transactionRepository = new Mock<ITransactionRepository>();
             _clientService = new Mock<IClientService>();
-            _contactService = new Mock<IContactService>();
             _fixture = new Fixture();
 
-            _transactionService = new TransactionService(_transactionRepository.Object, _clientService.Object, _contactService.Object);
+            _transactionService = new TransactionService(_transactionRepository.Object, _clientService.Object);
         }
 
         [Test]
@@ -79,26 +77,13 @@ namespace Banking.Operation.Transaction.Tests.Transaction.Services
         public async Task ShouldSaveTransaction()
         {
             var client = _fixture.Create<ClientDto>();
-            var contact = _fixture.Create<ContactDto>();
-            var requestTransactionDto = new RequestTransactionDto { ContactId = contact.Id, Value = 10 };
+            var requestTransactionDto = new RequestTransactionDto { Type = "Credit", Value = 10 };
             _clientService.Setup(c => c.GetOne(client.Id)).Returns(Task.FromResult(client));
-            _contactService.Setup(c => c.GetOne(client.Id, contact.Id)).Returns(Task.FromResult(contact));
 
             var transactionDto = await _transactionService.Save(client.Id, requestTransactionDto);
 
             Assert.IsNotNull(transactionDto);
             _transactionRepository.Verify(c => c.Add(It.IsAny<TransactionEntity>()));
-        }
-
-        [Test]
-        public void ShouldNotSaveWhenInvalidContact()
-        {
-            var client = _fixture.Create<ClientDto>();
-            var requestTransactionDto = _fixture.Create<RequestTransactionDto>();
-            _clientService.Setup(c => c.GetOne(client.Id)).Returns(Task.FromResult(client));
-
-            Func<Task> action = async () => { await _transactionService.Save(client.Id, requestTransactionDto); };
-            action.Should().ThrowAsync<BussinessException>();
         }
     }
 }

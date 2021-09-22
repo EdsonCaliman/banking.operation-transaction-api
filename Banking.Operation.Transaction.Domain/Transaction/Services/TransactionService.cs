@@ -1,6 +1,7 @@
 ﻿using Banking.Operation.Transaction.Domain.Abstractions.Exceptions;
 using Banking.Operation.Transaction.Domain.Transaction.Dtos;
 using Banking.Operation.Transaction.Domain.Transaction.Entities;
+using Banking.Operation.Transaction.Domain.Transaction.Enums;
 using Banking.Operation.Transaction.Domain.Transaction.Repositories;
 using System;
 using System.Collections.Generic;
@@ -13,16 +14,13 @@ namespace Banking.Operation.Transaction.Domain.Transaction.Services
     {
         private readonly ITransactionRepository _transactionRepository;
         private readonly IClientService _clientService;
-        private readonly IContactService _contactService;
 
         public TransactionService(
             ITransactionRepository transactionRepository, 
-            IClientService clientService, 
-            IContactService contactService)
+            IClientService clientService)
         {
             _transactionRepository = transactionRepository;
             _clientService = clientService;
-            _contactService = contactService;
         }
 
         public async Task<List<ResponseTransactionDto>> GetAll(Guid clientid)
@@ -49,9 +47,9 @@ namespace Banking.Operation.Transaction.Domain.Transaction.Services
         {
             var client = await ValidateClient(clientid);
 
-            var contact = await ValidateContact(client, transaction.ContactId);
+            Enum.TryParse(transaction.Type, out TransactionType type);
 
-            var transactionEntity = new TransactionEntity(client, contact, transaction.Value);
+            var transactionEntity = new TransactionEntity(client, type, transaction.Value);
 
             await _transactionRepository.Add(transactionEntity);
 
@@ -68,18 +66,6 @@ namespace Banking.Operation.Transaction.Domain.Transaction.Services
             }
 
             return client;
-        }
-
-        private async Task<ContactDto> ValidateContact(ClientDto client, Guid contactId)
-        {
-            var contact = await _contactService.GetOne(client.Id, contactId);
-
-            if (contact is null)
-            {
-                throw new BussinessException("Operation not performed", "Contact not registered");
-            }
-
-            return contact;
         }
     }
 }

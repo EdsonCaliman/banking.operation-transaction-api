@@ -8,14 +8,14 @@ namespace Banking.Operation.Transaction.Domain.Transaction.Dtos
         public ResponseTransactionDto(TransactionEntity entity)
         {
             Id = entity.Id;
-            ContactId = entity.ContactId;
+            Type = entity.Type.ToString();
             Value = entity.Value;
             CreatedAt = entity.CreatedAt;
             CreatedBy = entity.CreatedBy;
         }
 
         public Guid Id { get; set; }
-        public Guid ContactId { get; set; }
+        public string Type { get; set; }
         public decimal Value { get; set; }
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; }

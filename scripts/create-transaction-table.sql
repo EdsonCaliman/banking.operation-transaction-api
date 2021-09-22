@@ -1,7 +1,7 @@
 CREATE TABLE `Transactions` (
   `Id` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
-  `ClientId` char(36) CHARACTER SET ascii COLLATE ascii_general_ci DEFAULT NULL,
-  `ContactId` char(36) CHARACTER SET ascii COLLATE ascii_general_ci DEFAULT NULL,
+  `ClientId` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  `Type` int NOT NULL,
   `Value` decimal(65,30) NOT NULL,
   `CreatedAt` datetime(6) NOT NULL,
   `CreatedBy` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
