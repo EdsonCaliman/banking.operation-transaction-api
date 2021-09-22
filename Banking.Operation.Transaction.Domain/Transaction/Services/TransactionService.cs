@@ -58,14 +58,14 @@ namespace Banking.Operation.Transaction.Domain.Transaction.Services
 
         private async Task<ClientDto> ValidateClient(Guid clientid)
         {
-            var client = await _clientService.GetOne(clientid);
-
-            if (client is null)
+            try
             {
-                throw new BussinessException("Operation not performed", "Client not registered");
+                return await _clientService.GetOne(clientid);
             }
-
-            return client;
+            catch (Exception)
+            {
+                throw new BussinessException("Operation not performed", "Client not found");
+            }
         }
     }
 }
