@@ -1,0 +1,24 @@
+version: '3.4'
+
+services:
+  mysql-transaction:
+    container_name: mysql-transaction
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: banking-operation-transaction
+    ports:
+      - "3307:3306"
+    volumes:
+      - "./scripts/create-transaction-table.sql:/docker-entrypoint-initdb.d/1.sql"
+
+  banking.operation.transaction.api:
+    container_name: transaction.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=server=mysql-transaction;port=3306;user=root;password=1234;database=banking-operation-transaction"
+      - "ClientApi:Url=http://banking.operation.client.api:80/v1/banking-operation"
+    depends_on:
+      - mysql-transaction
+    ports:
+      - "8002:80"
