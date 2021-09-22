@@ -13,11 +13,23 @@ Using a docker-compose configuration the components will be connected so that to
 
 This component will be responsible for register the transactions, attending the crud operations. It uses a mysql database to register the data.
 
+![image](https://user-images.githubusercontent.com/19686147/134355746-75f9fdd6-2dc8-4130-8280-d314b66686c9.png)
+
 # Bussiness Rules
+
+ - A transaction needs to have a type (Credit/Debit) and a value.
+ - The value needs to be between 0 and 10000.
+ - The transaction needs to have a valid client to be registered.
+ - A transaction cannot be changed or removed, a new entry must be generated for adjustment if necessary.
+ - The transaction needs to have an Id for identification, which should be generated automatically.
 
 # How to run
 
-With a docker already installed run:
+With a docker already installed:
+
+Run first the project: https://github.com/EdsonCaliman/banking.operation-contact-api
+
+After run:
 
 docker-compose up -d
 
