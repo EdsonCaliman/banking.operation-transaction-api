@@ -18,7 +18,7 @@ This component will be responsible for register the transactions, attending the 
 # Bussiness Rules
 
  - A transaction needs to have a type (Credit/Debit) and a value.
- - The value needs to be between 0 and 10000.
+ - The value needs to be between 0.1 and 10000.
  - The transaction needs to have a valid client to be registered.
  - A transaction cannot be changed or removed, a new entry must be generated for adjustment if necessary.
  - The transaction needs to have an Id for identification, which should be generated automatically.

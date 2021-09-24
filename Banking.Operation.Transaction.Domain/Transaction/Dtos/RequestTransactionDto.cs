@@ -9,7 +9,7 @@ namespace Banking.Operation.Transaction.Domain.Transaction.Dtos
         [EnumDataTypeAttribute(typeof(TransactionType))]
         public string Type { get; set; }
         [Required(ErrorMessage = "Value is mandatory")]
-        [Range(0, 10000, ErrorMessage = "Value must be between 0 and 10000")]
+        [Range(0.1, 10000, ErrorMessage = "Value must be between 0.1 and 10000")]
         public decimal Value { get; set; }
     }
 }
