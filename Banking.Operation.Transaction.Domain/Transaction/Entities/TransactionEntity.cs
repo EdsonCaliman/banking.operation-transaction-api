@@ -3,9 +3,11 @@ using Banking.Operation.Transaction.Domain.Transaction.Dtos;
 using Banking.Operation.Transaction.Domain.Transaction.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Banking.Operation.Transaction.Domain.Transaction.Entities
 {
+    [ExcludeFromCodeCoverage]
     public class TransactionEntity
     {
         public TransactionEntity(ClientDto client, TransactionType type, decimal value)

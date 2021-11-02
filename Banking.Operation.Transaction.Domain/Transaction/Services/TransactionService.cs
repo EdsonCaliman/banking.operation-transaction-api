@@ -47,7 +47,10 @@ namespace Banking.Operation.Transaction.Domain.Transaction.Services
         {
             var client = await ValidateClient(clientid);
 
-            Enum.TryParse(transaction.Type, out TransactionType type);
+            bool enumParse = Enum.TryParse(transaction.Type, out TransactionType type);
+
+            if (!enumParse)
+                throw new BussinessException("Operation not performed", "TransactionType not found");
 
             var transactionEntity = new TransactionEntity(client, type, transaction.Value);
 

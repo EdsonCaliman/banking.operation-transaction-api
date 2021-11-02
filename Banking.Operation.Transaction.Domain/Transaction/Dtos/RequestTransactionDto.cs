@@ -1,8 +1,10 @@
 ﻿using Banking.Operation.Transaction.Domain.Transaction.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Banking.Operation.Transaction.Domain.Transaction.Dtos
 {
+    [ExcludeFromCodeCoverage]
     public class RequestTransactionDto
     {
         [Required(ErrorMessage = "Type is mandatory")]

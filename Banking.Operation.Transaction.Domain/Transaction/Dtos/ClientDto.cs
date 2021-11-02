@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Banking.Operation.Transaction.Domain.Transaction.Dtos
 {
+    [ExcludeFromCodeCoverage]
     public class ClientDto
     {
         public ClientDto()
