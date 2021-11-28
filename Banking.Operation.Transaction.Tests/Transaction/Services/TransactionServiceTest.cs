@@ -51,6 +51,7 @@ namespace Banking.Operation.Transaction.Tests.Transaction.Services
         {
             var client = _fixture.Create<ClientDto>();
             var transactionId = Guid.NewGuid();
+            _clientService.Setup(c => c.GetOne(client.Id)).Throws(new Exception());
 
             Func<Task> action = async () => { await _transactionService.GetOne(client.Id, transactionId); };
             action.Should().ThrowAsync<BussinessException>();
